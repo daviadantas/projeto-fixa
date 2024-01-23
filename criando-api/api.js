@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const {InserirCliente} = require('./db')
 
 app.use(express.json());
 app.use(cors());
@@ -17,15 +18,15 @@ app.get('/clientes', (req, res) =>{
     res.status(200).send(frequesia)
 })
 
-app.get('/clientes:id', (req, res) => {
+app.get('/clientes:id',  (req, res) => {
     const cliente = frequesia.find(x => x.id == req.params.id)
     res.status(200).send(cliente)
 })
 
-app.post('/clientes', (req, res) =>{
-    const cliente = req.body;
+app.post('/clientes', async (req, res) =>{
+    const cliente = req.body;;
     cliente.dataCadastro = new Date().toISOString();
-    frequesia.push(req.body)
+    await InserirCliente(cliente);
     res.status(200).json({message: "cliente cadastrado com sucesso!", cliente: cliente})
 })
 
