@@ -10,15 +10,18 @@ const conectar = async () =>{
 
 const TodosClientes = async()=>{
     const con = await conectar()
-    const [linhas] = await con.query('SELECT * FROM cliente')
+    const [linhas] = await con.query('SELECT * FROM cliente;')
     return await linhas
 }
 
 const InserirCliente = async(cliente)=>{
     const con = await conectar()
-    const sql = 'INSERT INTO cliente (id,cpf,numero,nome,data,divida) VALUES(?,?,?,?,?,?)'
-    const valores = [cliente.id,cliente.cpf,cliente.numero,cliente.nome,cliente.data,cliente.divida]
+    const sql = 'INSERT INTO cliente (cpf,data,divida,nome,numero) VALUES(?,?,?,?,?)'
+    const valores = [cliente.cpf,cliente.data,cliente.divida,cliente.nome,cliente.numero]
     await con.query(sql,valores)
+    valores.forEach(element => {
+        console.log(element)
+    });
 }
 
 const AtualizaCliente = async(id,cliente)=>{
