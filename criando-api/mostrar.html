@@ -23,6 +23,12 @@
     </style>
 </head>
 <body>
+    <div class="buscar">
+        <input id="inputBuscar" type="text" placeholder="quem você deseja buscar">
+        <ul id="listaNomes">
+
+        </ul>
+    </div>
 
     <h2>Tabela de Clientes</h2>
 
@@ -35,7 +41,7 @@
                 <th>Data</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tabela-buscar">
             <tr>
                 <td id="id"></td>
                 <td id="nome"></td>
@@ -74,4 +80,29 @@ let res = fetch(endpoint)
             cellData.innerHTML = cliente.data;
         });
     })
+
+    const InputBuscar = document.getElementById('inputBuscar')
+    const tabelaClientes = document.getElementById('tabela-buscar')
+
+    InputBuscar.addEventListener('keyup', () => {
+        let expressao = InputBuscar.value.toLowerCase();
+
+        let linhas = tabelaClientes.getElementsByTagName('tr')
+
+        for(let posicao in linhas) {
+            if(true === isNaN(posicao)){
+                continue
+            }
+
+            let conteudoDaLinha = linhas[posicao].innerHTML.toLowerCase()
+
+            if(true === conteudoDaLinha.includes(expressao)){
+                linhas[posicao].style.display = '';
+            } else{
+                linhas[posicao].style.display = 'none';
+            }
+        }
+    })
+
+
 </script>
