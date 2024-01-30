@@ -32,9 +32,9 @@ const AtualizaCliente = async(id,cliente)=>{
 }
 
 const AtualizaDivida = async(id,cliente)=>{
-    const con = await conectar()
-    const sql = 'UPDATE cliente SET divida=? WHERE id=?'
-    const valores = [cliente.divida,id]
+    const con = await conectar
+    const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
+    const valores = [cliente.data,cliente.divida,id]
     await con.query(sql,valores)
 }
 
@@ -45,4 +45,4 @@ const DeletarCliente = async(id)=>{
     await con.query(sql,valores)
 }
 
-module.exports = {TodosClientes, InserirCliente,AtualizaCliente,DeletarCliente}
+module.exports = {TodosClientes, InserirCliente,AtualizaCliente,DeletarCliente,AtualizaDivida}

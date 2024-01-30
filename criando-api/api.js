@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const date = require('date-and-time');
-const db = require('./db')
-const {InserirCliente,TodosClientes,AtualizaCliente} = require('./db')
+const {InserirCliente,TodosClientes,AtualizaCliente,AtualizaDivida} = require('./db')
 
 app.use(express.json());
 app.use(cors());
@@ -42,6 +40,14 @@ app.post('/clientes', async (req, res) =>{
 
 app.put('/clientes/:id', async (req, res) => {
     const id = req.params.id
+
+    function formatarDataParaMySQL(data) {
+        const dataFormatada = new Date(data);
+        return dataFormatada.toISOString().slice(0, 19).replace('T', ' ');
+      }
+    cliente.data = formatarDataParaMySQL(new Date);
+
+    await AtualizaDivida(id,req.body)
     await AtualizaCliente(id, req.body)
     res.status(200).send("contado do cliente atualizado com sucesso ")
 })
