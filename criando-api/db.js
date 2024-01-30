@@ -31,6 +31,13 @@ const AtualizaCliente = async(id,cliente)=>{
     await con.query(sql,valores)
 }
 
+const AtualizaDivida = async(id,cliente)=>{
+    const con = await conectar()
+    const sql = 'UPDATE cliente SET divida=? WHERE id=?'
+    const valores = [cliente.divida,id]
+    await con.query(sql,valores)
+}
+
 const DeletarCliente = async(id)=>{
     const con = await conectar()
     const sql = 'DELETE FROM cliente WHERE id=?'
