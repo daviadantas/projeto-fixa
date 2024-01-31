@@ -12,11 +12,18 @@
         <input placeholder="cpf" name="cpf" type="text" class="dados-atualizar">
         <input placeholder="numero" name="numero" type="text" class="dados-atualizar">
         <input placeholder="divida" name="divida" type="number">
+        <select id="opicao">
+            <option id="aum">Aumentar</option>
+            <option id="dim">Diminuir</option>
+            <option id="atu">Atualizar dados dos clientes</option>
+        </select>
         <button type="submit">Atualizar</button>
     </form>
 </body>
 <script>
 const cadastroCliente = document.getElementById('from-api')
+const select = document.getElementById('opicao').value
+
 
 cadastroCliente.addEventListener('submit', evento => {
     evento.preventDefault();
@@ -25,7 +32,7 @@ cadastroCliente.addEventListener('submit', evento => {
     const data = Object.fromEntries(formData)
     const idCliente = document.getElementById('id').value;
 
-    fetch(`http://localhost:3000/clientes/${idCliente}`, {
+    fetch(`http://localhost:3000/clientes/${idCliente}` + encodeURIComponent(select), {
         method:'PUT',
         headers: {
             'content-Type': 'application/json'
