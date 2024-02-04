@@ -25,14 +25,13 @@ const cadastroCliente = document.getElementById('from-api')
 
 
 
-
 cadastroCliente.addEventListener('submit', evento => {
     evento.preventDefault();
 
     const formData = new FormData(cadastroCliente);
     const data = Object.fromEntries(formData)
     const idCliente = document.getElementById('id').value;
-    const select = document.getElementById('opicao').value
+    const select = document.getElementById('operacoes').value;
 
 if(select == 'aum' || select == 'dim'){
 
