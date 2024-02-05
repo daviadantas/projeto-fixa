@@ -31,11 +31,25 @@ const AtualizaCliente = async(id,cliente)=>{
     await con.query(sql,valores)
 }
 
-const AtualizaDivida = async(id,cliente)=>{
-    const con = await conectar
-    const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
-    const valores = [cliente.data,cliente.divida,id]
-    await con.query(sql,valores)
+const AtualizaDivida = async(id,cliente,operacao)=>{
+    const con = await conectar()
+    if(operacao == "dim" ){
+        const res = await con.query('SELECT divida FROM cliente WHERE id = ?;', [id])
+        const dividaAntiga = res[0].divida
+        const novaDivida = dividaAntiga - cliente.divida
+        const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
+        const valores = [cliente.data,novaDivida,id]
+        await con.query(sql,valores)
+
+    }else{
+        const res = await con.query('SELECT divida FROM cliente WHERE id = ?;', [id])
+        const dividaAntiga = res[0].divida
+        const novaDivida = dividaAntiga + cliente.divida
+        const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
+        const valores = [cliente.data,novaDivida,id]
+        await con.query(sql,valores)
+    }
+
 }
 
 const DeletarCliente = async(id)=>{

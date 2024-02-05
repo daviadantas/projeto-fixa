@@ -53,7 +53,7 @@ app.put('/clientes/:id', async (req, res) => {
 })
 
 app.put('/clientes/divida/:id', async (req, res) => {
-
+    const cliente = req.body;
     const id = req.params.id
 
     function formatarDataParaMySQL(data) {
