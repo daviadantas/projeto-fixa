@@ -31,20 +31,28 @@ const AtualizaCliente = async(id,cliente)=>{
     await con.query(sql,valores)
 }
 
-const AtualizaDivida = async(id,cliente,operacao)=>{
+const AtualizaDivida = async(id,cliente)=>{
     const con = await conectar()
-    if(operacao == "dim" ){
-        const res = await con.query('SELECT divida FROM cliente WHERE id = ?;', [id])
-        const dividaAntiga = res[0].divida
-        const novaDivida = dividaAntiga - cliente.divida
+    let operacao = cliente.operacao
+    console.log(operacao)
+    if(operacao == 'dim' ){
+       const res = await con.query('SELECT divida FROM cliente WHERE id = ?;', [id])
+        let dividaAntiga = res[0][0].divida
+        let dividaAntigaNumero = parseFloat(dividaAntiga)
+        let dividaNumero = parseFloat(cliente.divida)
+        const novaDivida = dividaAntigaNumero - dividaNumero
+        console.log(novaDivida)
         const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
         const valores = [cliente.data,novaDivida,id]
         await con.query(sql,valores)
 
     }else{
+        console.log('entrou em aum')
         const res = await con.query('SELECT divida FROM cliente WHERE id = ?;', [id])
-        const dividaAntiga = res[0].divida
-        const novaDivida = dividaAntiga + cliente.divida
+        let dividaAntiga = res[0][0].divida
+        let dividaAntigaNumero = parseFloat(dividaAntiga)
+        let dividaNumero = parseFloat(cliente.divida)
+        const novaDivida = dividaAntigaNumero + dividaNumero
         const sql = 'UPDATE cliente SET data=?,divida=? WHERE id=?'
         const valores = [cliente.data,novaDivida,id]
         await con.query(sql,valores)

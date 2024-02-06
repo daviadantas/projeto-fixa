@@ -39,7 +39,7 @@ app.post('/clientes', async (req, res) =>{
 })
 
 app.put('/clientes/:id', async (req, res) => {
-    console.log(req.body)
+    const cliente = req.body
     const id = req.params.id
 
    function formatarDataParaMySQL(data) {
