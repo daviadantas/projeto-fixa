@@ -54,55 +54,42 @@
 
 </body>
 <script>
-    const id = document.getElementById("id")
-    const nome = document.getElementById("nome")
-    const divida = document.getElementById("divida")
-    const data = document.getElementById("data")
+const endpoint = "http://localhost:3000/clientes";
+fetch(endpoint)
+.then(res => res.json())
+.then(dados => {
+    console.log(dados);
 
-const endpoint = "http://localhost:3000/clientes"
-let res = fetch(endpoint)
-.then(res=>res.json())
-.then(dados=>{
-    console.log(dados)
-
-    const tabela = dados.clientes
+    const tabela = dados.clientes;
+    const tabelaClientes = document.getElementById('tabela-buscar');
     tabela.forEach(cliente => {
+        const row = tabelaClientes.insertRow();
+        const cellId = row.insertCell(0);
+        const cellNome = row.insertCell(1);
+        const cellDivida = row.insertCell(2);
+        const cellData = row.insertCell(3);
 
-            const row = tabelaClientes.insertRow();
-            const cellId = row.insertCell(0);
-            const cellNome = row.insertCell(1);
-            const cellDivida = row.insertCell(2);
-            const cellData = row.insertCell(3);
+        cellId.innerHTML = cliente.id;
+        cellNome.innerHTML = cliente.nome;
+        cellDivida.innerHTML = cliente.divida;
+        cellData.innerHTML = cliente.data;
 
-            cellId.innerHTML = cliente.id;
-            cellNome.innerHTML = cliente.nome;
-            cellDivida.innerHTML = cliente.divida;
-            cellData.innerHTML = cliente.data;
-        });
-    })
-
-    const InputBuscar = document.getElementById('inputBuscar')
-    const tabelaClientes = document.getElementById('tabela-buscar')
-
-    InputBuscar.addEventListener('keyup', () => {
-        let expressao = InputBuscar.value.toLowerCase();
-
-        let linhas = tabelaClientes.getElementsByTagName('tr')
-
-        for(let posicao in linhas) {
-            if(true === isNaN(posicao)){
-                continue
-            }
-
-            let conteudoDaLinha = linhas[posicao].innerHTML.toLowerCase()
-
-            if(true === conteudoDaLinha.includes(expressao)){
-                linhas[posicao].style.display = '';
-            } else{
-                linhas[posicao].style.display = 'none';
-            }
+        // Adiciona um ouvinte de eventos 'click' à linha inteira
+        row.addEventListener('click', () => {
+            // Aqui, você pode acessar os dados da linha clicada
+        fetch(`http://localhost:3000/clientes/${cliente.id}`, {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'application/json'
         }
-    })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+        });
+        });
+    });
+
 
 
 </script>
