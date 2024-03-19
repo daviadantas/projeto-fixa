@@ -1,12 +1,10 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const {InserirCliente,TodosClientes,AtualizaCliente,AtualizaDivida} = require('./db')
+const {InserirCliente,BuscarHistorico,TodosClientes,AtualizaCliente,AtualizaDivida} = require('./db')
 
 app.use(express.json());
 app.use(cors());
-
-const frequesia = []
 
 app.listen(3000, () =>{
     console.log('servidor iniciado')
