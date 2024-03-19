@@ -5,7 +5,6 @@ const {InserirCliente,BuscarHistorico,TodosClientes,AtualizaCliente,AtualizaDivi
 
 app.use(express.json());
 app.use(cors());
-
 app.listen(3000, () =>{
     console.log('servidor iniciado')
 });
@@ -15,6 +14,12 @@ app.get('/clientes', async (req, res) =>{
     console.log('usuarios buscados')
     const clientes = await TodosClientes()
     res.status(200).json({clientes})
+})
+
+app.get('/clientes/:id', async (req, res) =>{
+    console.log('buscado historico')
+    const historico = await BuscarHistorico(req.params.id)
+    res.status(200).json({historico})
 })
 
 app.get('/cliente/:id',  (req, res) => {
